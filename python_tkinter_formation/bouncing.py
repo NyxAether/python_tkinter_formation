@@ -8,6 +8,10 @@ MIN_SIZE = 20
 MAX_SIZE = 40
 
 
+def speed_collision(m1, m2, s1, s2):
+    return ((m1 - m2) * s1 + 2 * m2 * s2) / (m1 + m2)
+
+
 class Ball:
     def __init__(
         self,
@@ -43,23 +47,10 @@ class Ball:
 
     def update_speed_ball_collision(self, b: "Ball"):
         if self.collision(b.pos, b.size):
-            v1x = (
-                (self.size - b.size) * self.speed[0] + 2 * b.size * b.speed[0]
-            ) / (self.size + b.size)
-
-            v1y = (
-                (self.size - b.size) * self.speed[1] + 2 * b.size * b.speed[1]
-            ) / (self.size + b.size)
-
-            v2x = (
-                (b.size - self.size) * b.speed[0]
-                + 2 * self.size * self.speed[0]
-            ) / (self.size + b.size)
-
-            v2y = (
-                (b.size - self.size) * b.speed[1]
-                + 2 * self.size * self.speed[1]
-            ) / (self.size + b.size)
+            v1x = speed_collision(self.size, b.size, self.speed[0], b.speed[0])
+            v1y = speed_collision(self.size, b.size, self.speed[1], b.speed[1])
+            v2x = speed_collision(b.size, self.size, b.speed[0], self.speed[0])
+            v2y = speed_collision(b.size, self.size, b.speed[1], self.speed[1])
 
             self.speed = [v1x, v1y]
             b.speed = [v2x, v2y]
