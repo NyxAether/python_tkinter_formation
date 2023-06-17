@@ -19,7 +19,7 @@ class Ball:
         pos: tuple[int, int],
         size_ball: int,
         color: str = "white",
-        speed: Optional[list[float]] = None,
+        speed: Optional[list[int]] = None,
     ) -> None:
         self.canvas = canvas
         self.size = size_ball
@@ -85,7 +85,7 @@ class BouncingCanvas(tk.Canvas):
         pos: tuple[int, int],
         size: int,
         color: str,
-        speed: list[float],
+        speed: list[int],
     ) -> bool:
         if self.check_valide_ball(pos, size):
             self.balls.append(Ball(self, pos, size, color, speed))
